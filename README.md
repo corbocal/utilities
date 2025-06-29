@@ -1,1 +1,1 @@
-# utilities
+A small collection of PHP tools and other convenience classes.
