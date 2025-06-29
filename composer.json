@@ -1,0 +1,31 @@
+{
+    "name": "corbocal/generic-utilities",
+    "description": "A small collection of PHP tools and convenience classes",
+    "type": "library",
+    "license": "GNU GPL v3.0",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "corbocal",
+            "email": "monkey-factory@protonmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "bradietilley/php-snowflake": "^1.0",
+        "ramsey/uuid": "^4.0",
+        "symfony/yaml": "^7.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "phpstan/phpstan": "^2.0",
+        "squizlabs/php_codesniffer": "^3.10",
+        "symfony/var-dumper": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Corbocal\\Utilities\\": "src/",
+            "Corbocal\\Utilities\\Tests\\": "tests/"
+        }
+    }
+}
