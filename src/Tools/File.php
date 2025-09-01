@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Tools;
 
+use InvalidArgumentException;
+
 class File
 {
     private function __construct()
@@ -90,14 +92,14 @@ class File
      *
      * @param string $path the full path to the desired directory.
      *
-     * @throws \InvalidArgumentException if the file does not exist.
+     * @throws InvalidArgumentException if the file does not exist.
      *
      * @return never
      */
     public static function download(string $path): never
     {
         if (!\is_file($path)) {
-            throw new \InvalidArgumentException("The file $path does not exist.");
+            throw new InvalidArgumentException("The file $path does not exist.");
         }
 
         \header('Content-type: "application/zip";');

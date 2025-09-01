@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Security;
 
+use InvalidArgumentException;
+
 final class Passwords
 {
     private const int MAX_LENGTH = 255;
@@ -62,7 +64,7 @@ final class Passwords
      * @param string|int $algo hash algorithm.
      * @param array<string,int> $options algorithm options.
      *
-     * @throws \InvalidArgumentException if the algorithm is not supported.
+     * @throws InvalidArgumentException if the algorithm is not supported.
      *
      * @return string the hashed password.
      */
@@ -73,7 +75,7 @@ final class Passwords
         array $options = []
     ) {
         if (!\in_array($algo, self::algos())) {
-            throw new \InvalidArgumentException("The provided algorithm `$algo` is not supported.");
+            throw new InvalidArgumentException("The provided algorithm `$algo` is not supported.");
         }
 
         return \password_hash($plainPassword, $algo, $options);
@@ -91,7 +93,7 @@ final class Passwords
      * @param string|int $algo hash algorithm.
      * @param array<string,int> $options algorithm options.
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return string the hashed password.
      */

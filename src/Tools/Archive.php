@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Tools;
 
+use ZipArchive;
+
 class Archive
 {
     private function __construct()
@@ -36,7 +38,7 @@ class Archive
         }
 
         $archiveFullPath = "$archiveDirectory . $archiveName";
-        $zip = new \ZipArchive();
+        $zip = new ZipArchive();
 
         if (\is_file($archiveFullPath)) {
             $archive = $zip->open($archiveFullPath, \ZipArchive::OVERWRITE);

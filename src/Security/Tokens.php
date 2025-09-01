@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Security;
 
+use InvalidArgumentException;
+
 /**
  * Unified tool for tokens generation
  */
@@ -40,7 +42,7 @@ final class Tokens
      * @param string $string the string to hash
      * @param string $algo the hashing algorithm to use (default: sha256)
      *
-     * @throws \InvalidArgumentException if the algorithm is not supported
+     * @throws InvalidArgumentException if the algorithm is not supported
      *
      * @return string the hashed string
      */
@@ -50,7 +52,7 @@ final class Tokens
         string $algo = self::DEFAULT_ALGO
     ): string {
         if (!\in_array($algo, Passwords::algos())) {
-            throw new \InvalidArgumentException("The provided algorithm `$algo` is not supported.");
+            throw new InvalidArgumentException("The provided algorithm `$algo` is not supported.");
         }
 
         return \hash($algo, $string);

@@ -4,11 +4,21 @@
 
     <description>PSR12 Standard</description>
 
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- display progress -->
+    <arg value="p"/>
+    <!-- show sniffs in reports -->
+    <arg value="s"/>
+    <!-- does not cache results between runs -->
+    <arg name="no-cache"/>
+
     <arg name="basepath" value="." />
-    <arg name="cache" value=".phpcs-cache" />
     <arg name="colors" />
     <arg name="extensions" value="php" />
     <config name="ignore_warnings_on_exit" value="true" />
+
     <exclude-pattern>vendor/</exclude-pattern>
 
     <rule ref="PSR12" />

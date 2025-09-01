@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Corbocal\Utilities\Cacher;
 
 use Corbocal\Utilities\Tools\File;
+use InvalidArgumentException;
+use RuntimeException;
 
 class Cacher
 {
@@ -26,7 +28,7 @@ class Cacher
      * @param array<string,string> $registryFiles
      * @param string $cacheDir
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(
         string $appRootDir,
@@ -36,7 +38,7 @@ class Cacher
     ) {
         $realpath = \realpath($appRootDir);
         if ($realpath === false) {
-            throw new \InvalidArgumentException("The path $appRootDir does not exist.");
+            throw new InvalidArgumentException("The path $appRootDir does not exist.");
         }
         $this->appRootDir = $realpath;
         if (\substr($cacheDir, 0, 1) === '/') {
@@ -73,7 +75,7 @@ class Cacher
     /**
      * Summary of createBaseCacheDirectory
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return void
      */
@@ -84,7 +86,7 @@ class Cacher
             $directory = File::createDirectory($this->getCacheDir(), 0777);
 
             if ($directory === false) {
-                throw new \RuntimeException("Unable to create directory {$this->getCacheDir()}");
+                throw new RuntimeException("Unable to create directory {$this->getCacheDir()}");
             }
         }
     }

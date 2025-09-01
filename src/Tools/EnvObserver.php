@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Tools;
 
+use RuntimeException;
+
 /**
  * Performs a case-insensitive check of the current environment (ENV) variable.
  */
@@ -12,7 +14,7 @@ class EnvObserver
     /**
      * @param string $env
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return bool
      */
@@ -24,7 +26,7 @@ class EnvObserver
             return (bool) \preg_match("/($env)/i", $currentEnv);
         }
 
-        throw new \RuntimeException("ENV is not defined.", 500);
+        throw new RuntimeException("ENV is not defined.", 500);
     }
 
     /**

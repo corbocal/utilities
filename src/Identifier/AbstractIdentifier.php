@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Identifier;
 
+use InvalidArgumentException;
+
 /**
  * Unique identifier for an entity/aggregate root.
  */
@@ -17,7 +19,7 @@ abstract class AbstractIdentifier implements IdentifierInterface
     {
         if (preg_match($this->regex, (string) $forcedValue) !== 1) {
             $classname = substr(static::class, strripos(static::class, '\\') + 1);
-            throw new \InvalidArgumentException("$classname.php : The value `$forcedValue` is not of the correct format.");
+            throw new InvalidArgumentException("$classname.php : The value `$forcedValue` is not of the correct format.");
         }
         $this->value = $forcedValue;
     }

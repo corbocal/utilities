@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Database;
 
+use InvalidArgumentException;
+use PDO;
+
 class PdoWrapper
 {
-    protected \PDO $pdo;
+    protected PDO $pdo;
 
     public function __construct(
         #[\SensitiveParameter]
@@ -16,7 +19,7 @@ class PdoWrapper
     ) {
         $parsedUrl = parse_url($dbUrl);
         if ($parsedUrl === false) {
-            throw new \InvalidArgumentException("Invalid database URL format.");
+            throw new InvalidArgumentException("Invalid database URL format.");
         }
         $host = $parsedUrl['host'] ?? "";
         $port = $parsedUrl['port'] ?? 3306;
@@ -25,16 +28,16 @@ class PdoWrapper
         $password = $parsedUrl['pass'] ?? "";
         $driver = $driverOverride ?? 'mysql';
         $charset = $charsetOverride ?? 'utf8mb4';
-        $this->pdo = new \PDO(
+        $this->pdo = new PDO(
             "$driver:host=$host:$port;dbname=$dbname;charset=$charset",
             $username,
             $password
         );
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     }
 
-    public function getPdo(): \PDO
+    public function getPdo(): PDO
     {
         return $this->pdo;
     }

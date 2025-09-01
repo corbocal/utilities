@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Corbocal\Utilities\Tools;
 
+use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
+use DateTimeZone;
+
 class Dates
 {
     public const int SECONDS_IN_MINUTE = 60;
@@ -27,40 +32,40 @@ class Dates
     {
     }
 
-    private static function dateTimeInterfaceInstance(string $datetime = "", bool $immutable = true): \DateTimeImmutable|\DateTime
+    private static function dateTimeInterfaceInstance(string $datetime = "", bool $immutable = true): DateTimeImmutable|DateTime
     {
-        return $immutable ? new \DateTimeImmutable($datetime) : new \DateTime($datetime);
+        return $immutable ? new DateTimeImmutable($datetime) : new DateTime($datetime);
     }
 
     /**
-     * Returns a \DateTimeInterface instance, or null, depending on what's needed.
+     * Returns a DateTimeInterface instance, or null, depending on what's needed.
      *
-     * @param \DateTimeInterface|string|null $date the date
+     * @param DateTimeInterface|string|null $date the date
      * * if __null__ and `$nullable` __true__, returns __null__.
-     * * if __null__ and `$nullable` __false__, returns the \DateTimeInterface of now.
-     * * if a __string__, returns the `\DateTimeInterface` associated to the time representation of `$date`.
-     * * if already a `\DateTimeInterface` instance, returns it.
+     * * if __null__ and `$nullable` __false__, returns the DateTimeInterface of now.
+     * * if a __string__, returns the `DateTimeInterface` associated to the time representation of `$date`.
+     * * if already a `DateTimeInterface` instance, returns it.
      * @param bool $nullable can the date be null?
      * @param bool $immutable should the result instance be immutable?
-     * @param ?\DateTimeZone $timezone if null, will set UTC by default.
+     * @param ?DateTimeZone $timezone if null, will set UTC by default.
      *
-     * @return ?\DateTimeInterface
+     * @return ?DateTimeInterface
      */
     public static function generate(
-        \DateTimeInterface|string|null $date = null,
+        DateTimeInterface|string|null $date = null,
         bool $nullable = false,
         bool $immutable = true,
-        ?\DateTimeZone $timezone = null,
-    ): ?\DateTimeInterface {
+        ?DateTimeZone $timezone = null,
+    ): ?DateTimeInterface {
         $result = null;
 
-        if ($date instanceof \DateTimeInterface) {
-            $result = self::dateTimeInterfaceInstance($date->format(\DateTimeInterface::ISO8601_EXPANDED), $immutable);
+        if ($date instanceof DateTimeInterface) {
+            $result = self::dateTimeInterfaceInstance($date->format(DateTimeInterface::ISO8601_EXPANDED), $immutable);
         } elseif (is_string($date) || !$nullable) {
             $result = self::dateTimeInterfaceInstance($date ?? "now", $immutable);
         }
 
-        $result = $result?->setTimezone($timezone ?? new \DateTimeZone("UTC"));
+        $result = $result?->setTimezone($timezone ?? new DateTimeZone("UTC"));
 
         return $result;
     }
@@ -104,9 +109,9 @@ class Dates
         return \round((\abs($timestamp1 - $timestamp2) / self::SECONDS_IN_MINUTE), 2);
     }
 
-    private static function toTimestamp(\DateTimeInterface|int|string $time): int
+    private static function toTimestamp(DateTimeInterface|int|string $time): int
     {
-        if ($time instanceof \DateTimeInterface) {
+        if ($time instanceof DateTimeInterface) {
             $time = $time->getTimestamp(); // timezone agnostic
         }
 
@@ -120,17 +125,17 @@ class Dates
     /**
      * Returns how many seconds there are between two times.
      *
-     * They can be either a timestamp, a \DateTimeInterface or a string representation as a date.\
+     * They can be either a timestamp, a DateTimeInterface or a string representation as a date.\
      * Does not work for/with microseconds.
      *
-     * @param \DateTimeInterface|string|int $date1
-     * @param \DateTimeInterface|string|int $date2
+     * @param DateTimeInterface|string|int $date1
+     * @param DateTimeInterface|string|int $date2
      *
      * @return int
      */
     public static function getSecondsBetween(
-        \DateTimeInterface|string|int $date1,
-        \DateTimeInterface|string|int $date2
+        DateTimeInterface|string|int $date1,
+        DateTimeInterface|string|int $date2
     ): int {
         $date1 = self::toTimestamp($date1);
         $date2 = self::toTimestamp($date2);
